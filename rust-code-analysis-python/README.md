@@ -12,11 +12,11 @@ Python bindings for [rust-code-analysis](https://github.com/mozilla/rust-code-an
 Pre-built wheels are available on [GitHub Releases](https://github.com/Droidcraft/rust-code-analysis/releases).
 
 ```bash
-# Install with pip
-pip install rust-code-analysis --find-links https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-v0.1.0
+# Install with pip (replace YYYYMMDD-N with the latest release tag)
+pip install rust-code-analysis --find-links https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-20260131-1
 
 # Or with uv
-uv pip install rust-code-analysis --find-links https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-v0.1.0
+uv pip install rust-code-analysis --find-links https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-20260131-1
 ```
 
 ### Adding as a Dependency
@@ -26,13 +26,13 @@ In your `pyproject.toml`:
 ```toml
 [project]
 dependencies = [
-    "rust-code-analysis>=0.1.0",
+    "rust-code-analysis",
 ]
 
 # For uv - configure the find-links source
 [tool.uv]
 find-links = [
-    "https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-v0.1.0"
+    "https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-20260131-1"
 ]
 
 # For pip - use dependency-links or install with --find-links flag
@@ -44,7 +44,7 @@ Alternatively, reference a specific wheel directly:
 [project]
 dependencies = [
     # Linux x86_64
-    "rust-code-analysis @ https://github.com/Droidcraft/rust-code-analysis/releases/download/python-v0.1.0/rust_code_analysis-0.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl ; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "rust-code-analysis @ https://github.com/Droidcraft/rust-code-analysis/releases/download/python-20260131-1/rust_code_analysis-0.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl ; sys_platform == 'linux' and platform_machine == 'x86_64'",
 ]
 ```
 
