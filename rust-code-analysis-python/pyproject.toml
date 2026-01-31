@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "rust-code-analysis"
-version = "0.1.0"
+version = "2026.1.31"
 description = "Python bindings for rust-code-analysis: compute code metrics using tree-sitter"
 readme = "README_PYTHON.md"
 license = { text = "MPL-2.0" }
