@@ -1,0 +1,16 @@
+[package]
+name = "rust-code-analysis-python"
+version = "0.1.0"
+authors = ["Droidcraft"]
+edition = "2024"
+license = "MPL-2.0"
+description = "Python bindings for Mozilla's rust-code-analysis library"
+repository = "https://github.com/Droidcraft/rust-code-analysis"
+
+[lib]
+name = "rust_code_analysis"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.23", features = ["extension-module"] }
+rust-code-analysis = { path = "..", version = "=0.0.25" }

@@ -47,7 +47,7 @@ opt-level = 3
 opt-level = 3
 
 [workspace]
-members = ["rust-code-analysis-cli", "rust-code-analysis-web"]
+members = ["rust-code-analysis-cli", "rust-code-analysis-web", "rust-code-analysis-python"]
 exclude = ["enums"]
 
 [profile.release]

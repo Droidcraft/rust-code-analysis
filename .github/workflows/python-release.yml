@@ -1,0 +1,127 @@
+name: Python Wheels
+
+on:
+  push:
+    tags:
+      - 'python-v*'
+  pull_request:
+    paths:
+      - 'rust-code-analysis-python/**'
+      - '.github/workflows/python-release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  PYTHON_VERSIONS: "3.12 3.13 3.14"
+
+jobs:
+  build-sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: PyO3/maturin-action@v1
+        with:
+          command: sdist
+          args: -m rust-code-analysis-python/Cargo.toml -o dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sdist
+          path: dist/*.tar.gz
+
+  build-wheels-linux:
+    name: Build Linux ${{ matrix.target }} wheels
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - x86_64-unknown-linux-gnu
+          - aarch64-unknown-linux-gnu
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          manylinux: auto
+          args: --release -m rust-code-analysis-python/Cargo.toml -o dist -i python3.12 -i python3.13 -i python3.14
+          sccache: 'true'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-linux-${{ matrix.target }}
+          path: dist/*.whl
+
+  build-wheels-macos:
+    name: Build macOS ${{ matrix.target }} - Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # macOS x86_64 (Intel)
+          - os: macos-13
+            target: x86_64-apple-darwin
+            python: "3.12"
+          - os: macos-13
+            target: x86_64-apple-darwin
+            python: "3.13"
+          - os: macos-13
+            target: x86_64-apple-darwin
+            python: "3.14"
+          # macOS arm64 (Apple Silicon)
+          - os: macos-14
+            target: aarch64-apple-darwin
+            python: "3.12"
+          - os: macos-14
+            target: aarch64-apple-darwin
+            python: "3.13"
+          - os: macos-14
+            target: aarch64-apple-darwin
+            python: "3.14"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          allow-prereleases: true
+
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          args: --release -m rust-code-analysis-python/Cargo.toml -o dist
+          sccache: 'true'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels-macos-${{ matrix.target }}-py${{ matrix.python }}
+          path: dist/*.whl
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: [build-sdist, build-wheels-linux, build-wheels-macos]
+    if: startsWith(github.ref, 'refs/tags/python-v')
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: List artifacts
+        run: ls -la dist/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          fail_on_unmatched_files: true
