@@ -6,7 +6,7 @@ build-backend = "maturin"
 name = "rust-code-analysis"
 version = "0.1.0"
 description = "Python bindings for rust-code-analysis: compute code metrics using tree-sitter"
-readme = "README.md"
+readme = "README_PYTHON.md"
 license = { text = "MPL-2.0" }
 requires-python = ">=3.9"
 classifiers = [

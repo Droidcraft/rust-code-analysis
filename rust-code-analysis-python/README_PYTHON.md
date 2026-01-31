@@ -13,10 +13,10 @@ Pre-built wheels are available on [GitHub Releases](https://github.com/Droidcraf
 
 ```bash
 # Install with pip (replace YYYYMMDD-N with the latest release tag)
-pip install rust-code-analysis --find-links https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-20260131-1
+pip install rust-code-analysis --find-links https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-20260131-2
 
 # Or with uv
-uv pip install rust-code-analysis --find-links https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-20260131-1
+uv pip install rust-code-analysis --find-links https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-20260131-2
 ```
 
 ### Adding as a Dependency
@@ -32,7 +32,7 @@ dependencies = [
 # For uv - configure the find-links source
 [tool.uv]
 find-links = [
-    "https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-20260131-1"
+    "https://github.com/Droidcraft/rust-code-analysis/releases/expanded_assets/python-20260131-2"
 ]
 
 # For pip - use dependency-links or install with --find-links flag
@@ -44,7 +44,7 @@ Alternatively, reference a specific wheel directly:
 [project]
 dependencies = [
     # Linux x86_64
-    "rust-code-analysis @ https://github.com/Droidcraft/rust-code-analysis/releases/download/python-20260131-1/rust_code_analysis-0.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl ; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "rust-code-analysis @ https://github.com/Droidcraft/rust-code-analysis/releases/download/python-20260131-2/rust_code_analysis-0.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl ; sys_platform == 'linux' and platform_machine == 'x86_64'",
 ]
 ```
 
